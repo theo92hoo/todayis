@@ -41,7 +41,8 @@
 	
 	Calendar.prototype.setCalendar = function(currentMoment){
 		$('#day').text(currentMoment.date());
-		$('#month').text($monthNames[currentMoment.month()]);
+		//$('#month').text($monthNames[currentMoment.month()]);
+		$('#month').text(currentMoment.format('MMMM'));
 		$('#year').text(currentMoment.year());
 		
 		var numberOfDaysInMonth = currentMoment.daysInMonth();
