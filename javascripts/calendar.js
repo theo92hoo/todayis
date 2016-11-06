@@ -59,19 +59,29 @@
 		while (calendarStart.isSameOrBefore(calendarEnd,"day")){
 			//console.log(calendarStart.format("YYYY-MM-DD"));
 			var tableClass = "";
+			var selected = false;
 			
 			if(calendarStart.isBefore(monthStart,"day") || calendarStart.isAfter(monthEnd,"day")){
 				tableClass += "adjacent-day ";
 			} 
 			else if(calendarStart.isSame(currentMoment,"day")){
 				tableClass += "selected-day ";
+				selected = true;
 			} 
 			
-			sampleData.forEach(function(obj){
-				if(moment(obj.date).isSame(calendarStart)){
-					tableClass += "event ";
-				}
-			});
+			if(typeof sampleData[calendarStart.year()] != "undefined"){
+				sampleData[calendarStart.year()].forEach(function(obj){
+					if(moment(obj.date).isSame(calendarStart)){
+						tableClass += "event ";
+						if(selected){
+							console.log(tableClass);
+							console.log(obj.event);
+						}
+					}
+				});
+			}else{
+				console.log("No event record found");
+			}
 			
 			if(calendarStart.day() == 6){
 				//calendarStart.day();

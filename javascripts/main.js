@@ -15,8 +15,13 @@ $(document).ready( function() {
     });
 	
 	//sort Array
-	sampleData.sort(function(a, b){return Date.parse(a.date)-Date.parse(b.date)});
-	sampleData.forEach(function(obj){
-		console.log(obj.date);
+
+	
+	sampleData.forEach(function(sampleDataObj){
+		sampleDataObj.sort(function(a, b){return Date.parse(a.date)-Date.parse(b.date)});
 	});
+	
+	
+	
+	console.log(sampleData)
 });
