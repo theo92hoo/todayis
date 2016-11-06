@@ -224,7 +224,7 @@ a {
 	width: .5em;
 }
 
-.event.selected:after {
+.selected-day.event:after {
     background: #ffffff;
 }
 
