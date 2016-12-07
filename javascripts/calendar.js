@@ -55,7 +55,8 @@
 		
 		$('tbody',this.element).children().remove();
 	
-		var tbody = "<tr>"
+		var tbody = "<tr>";
+		var projectbody = "";
 		while (calendarStart.isSameOrBefore(calendarEnd,"day")){
 			//console.log(calendarStart.format("YYYY-MM-DD"));
 			var tableClass = "";
@@ -69,18 +70,20 @@
 				selected = true;
 			} 
 			
+			//if events found in year
 			if(typeof sampleData[calendarStart.year()] != "undefined"){
 				sampleData[calendarStart.year()].forEach(function(obj){
 					if(moment(obj.date).isSame(calendarStart)){
 						tableClass += "event ";
 						if(selected){
-							console.log(tableClass);
-							console.log(obj.event);
+							(obj.event).forEach(function(event){
+								projectbody += "<div class='event-body'><img src='" + (typeof event.url == "undefined" || event.url == "" ? "images/noimage.png" : event.url) + "' alt='" + event.day + "' width='100%' height='180'>" +
+											 "<div class='event-container'><h3>" + event.day + "</h3><span>" + (typeof event.description == "undefined" || event.description == "" ? "No Description" : event.description) + "</span></div></div>";
+								//console.log(event.day);
+							});
 						}
 					}
 				});
-			}else{
-				console.log("No event record found");
 			}
 			
 			if(calendarStart.day() == 6){
@@ -91,9 +94,16 @@
 			}
 			calendarStart.add(1, 'days');
 		}
-		tbody += "</tr>"
+		tbody += "</tr>";
 		
 		$('tbody',this.element).html(tbody);
+		
+		if(projectbody != ""){
+			$(".project-body").html(projectbody);
+		}else{
+			console.log("no events")
+			$(".project-body").html('<h2 class="project-tagline"><div><i class="fa fa-question"></i><i class="fa fa-question"></i><i class="fa fa-question"></i></h2>');
+		}
 		//$('.calendar-table tbody',this.element).children().remove();
 	}
 	
