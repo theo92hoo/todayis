@@ -19,5 +19,13 @@ $(document).ready( function() {
 		sampleDataObj.sort(function(a, b){return Date.parse(a.date)-Date.parse(b.date)});
 	});
 	
+	$(".top-header").on('click', '.fa-th', function(){
+		$(window).scrollTop($(".project-body").position().top);
+	});
+	
+	$(".top-header").on('click', '.fa-calendar', function(){
+		$(window).scrollTop($(".calendar").position().top);
+	});
+	
 	console.log(sampleData)
 });
