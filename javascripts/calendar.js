@@ -39,7 +39,7 @@
 	}
 	*/
 	
-	Calendar.prototype.setCalendar = function(currentMoment){
+	Calendar.prototype.setCalendar = function(currentMoment, daySelected){
 		$('#day').text(currentMoment.date());
 		//$('#month').text($monthNames[currentMoment.month()]);
 		$('#month').text(currentMoment.format('MMMM'));
@@ -55,7 +55,8 @@
 		
 		$('tbody',this.element).children().remove();
 	
-		var tbody = "<tr>"
+		var tbody = "<tr>";
+		var projectbody = "";
 		while (calendarStart.isSameOrBefore(calendarEnd,"day")){
 			//console.log(calendarStart.format("YYYY-MM-DD"));
 			var tableClass = "";
@@ -69,18 +70,20 @@
 				selected = true;
 			} 
 			
+			//if events found in year
 			if(typeof sampleData[calendarStart.year()] != "undefined"){
 				sampleData[calendarStart.year()].forEach(function(obj){
 					if(moment(obj.date).isSame(calendarStart)){
 						tableClass += "event ";
 						if(selected){
-							console.log(tableClass);
-							console.log(obj.event);
+							(obj.event).forEach(function(event){
+								projectbody += "<div class='event-body'><img src='" + (typeof event.url == "undefined" || event.url == "" ? "images/noimage.png" : event.url) + "' alt='" + event.day + "' width='100%' height='180'>" +
+											 "<div class='event-container'><h3>" + event.day + "</h3><span>" + (typeof event.description == "undefined" || event.description == "" ? "No Description" : event.description) + "</span></div></div>";
+								//console.log(event.day);
+							});
 						}
 					}
 				});
-			}else{
-				console.log("No event record found");
 			}
 			
 			if(calendarStart.day() == 6){
@@ -91,24 +94,35 @@
 			}
 			calendarStart.add(1, 'days');
 		}
-		tbody += "</tr>"
+		tbody += "</tr>";
 		
 		$('tbody',this.element).html(tbody);
+		
+		if(projectbody != ""){
+			$(".project-body").html(projectbody);
+			//$(window).scrollTop($(".project-body").position().top);
+		}else{
+			console.log("no events")
+			$(".project-body").html('<h2 class="project-tagline"><div><i class="fa fa-question"></i><i class="fa fa-question"></i><i class="fa fa-question"></i></h2>');
+			//$(window).scrollTop($(".calendar").find('[data-id=' + currentMoment.format("YYYY-MM-DD") + ']').position().top);
+		}
+		if(typeof daySelected != "undefined") $(window).scrollTop($(".calendar").find('[data-id=' + daySelected.data('id') + ']').position().top);
+		else $(window).scrollTop($(".calendar").find('.calendarTop').position().top);
 		//$('.calendar-table tbody',this.element).children().remove();
 	}
 	
 	Calendar.prototype.bindEvents = function() {
-    var $container = this.element;
+		var $container = this.element;
 
-    // bind the buttons' events
-    $container
-      .on('click', '.'+this.options.targets.nextDay, { context: this }, this.nextDay)
-      .on('click', '.'+this.options.targets.previousDay, { context: this }, this.previousDay)
-      .on('click', '.'+this.options.targets.nextMonth, { context: this }, this.nextMonth)
-      .on('click', '.'+this.options.targets.previousMonth, { context: this }, this.previousMonth)
-      .on('click', '.'+this.options.targets.nextYear, { context: this }, this.nextYear)
-	  .on('click', '.'+this.options.targets.previousYear, { context: this }, this.previousYear)
-	  .on('click', 'tbody td', { context: this }, this.daySelected);
+		// bind the buttons' events
+		$container
+		  .on('click', '.'+this.options.targets.nextDay, { context: this }, this.nextDay)
+		  .on('click', '.'+this.options.targets.previousDay, { context: this }, this.previousDay)
+		  .on('click', '.'+this.options.targets.nextMonth, { context: this }, this.nextMonth)
+		  .on('click', '.'+this.options.targets.previousMonth, { context: this }, this.previousMonth)
+		  .on('click', '.'+this.options.targets.nextYear, { context: this }, this.nextYear)
+		  .on('click', '.'+this.options.targets.previousYear, { context: this }, this.previousYear)
+		  .on('click', 'tbody td', { context: this }, this.daySelected);
   }
   
   Calendar.prototype.nextDay = function(event) {
@@ -144,7 +158,7 @@
   Calendar.prototype.daySelected = function(event) {
     var $self = event.data.context;
 	$self.currentMoment = moment($(this).data('id'));
-	$self.setCalendar($self.currentMoment);
+	$self.setCalendar($self.currentMoment, $(this));
   };
 	
 	$.fn.define = function(options) {
