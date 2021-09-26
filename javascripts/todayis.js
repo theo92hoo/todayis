@@ -33,4 +33,20 @@ sampleData["2018"] = [
 	{date:"2018-12-25",event:[{day:"Christmas"}]}
 ];
 
+sampleData["2021"] = [
+	{date:"2021-01-01",event:[{day:"New Year",description:"Calendar's year count increments by one.",url:"http://www.happy-newyearimages.com/wp-content/uploads/2016/09/Happy-new-year-2017-wallpaper-Images-Full-HD.jpg"},
+							{day:"National Hangover Day",description:"A day that traditionally is spent celebrating to bring in the New Year.",url:""}]},
+	{date:"2021-02-12",event:[{day:"Chinese New Year",description:"First day of the first lunar month ",url:"http://data.chinatravel.com/images/focus/chinese-new-year/chinese-new-year-1200.jpg"}]},
+	{date:"2021-02-13",event:[{day:"Chinese New Year (2nd day)",description:"Second day of the lunar New Year.",url:"http://previews.123rf.com/images/acucucu/acucucu1606/acucucu160600249/58504665-Oriental-Happy-Chinese-New-Year-2017-Year-of-Rooster-Design-Stock-Vector.jpg"}]},
+	{date:"2021-04-02",event:[{day:"Good Friday"}]},
+	{date:"2021-05-01",event:[{day:"Labour Day"}]},
+	{date:"2021-05-13",event:[{day:"Hari Raya Puasa"}]},
+	{date:"2021-05-26",event:[{day:"Vesak Day"}]},
+	{date:"2021-07-20",event:[{day:"Hari Raya Haji"}]},
+	{date:"2021-08-09",event:[{day:"National Day"}]},
+	{date:"2021-11-04",event:[{day:"Deepavali"}]},
+	{date:"2021-12-25",event:[{day:"Christmas Day"}]}
+];
+
+
 
